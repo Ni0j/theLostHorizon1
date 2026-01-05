@@ -40,13 +40,14 @@
 font-weight: 200;
 font-style: normal;
             font-size: .25rem;
+            cursor:crosshair;
         }
 
         .photos {
             position: absolute;
             flex-direction: column;
             overflow: hidden;
-            cursor: pointer;
+            cursor:move;
             /* width: 80%; */
             /* border: .025rem solid #000000; */
             }
@@ -62,18 +63,21 @@ font-style: normal;
 
         .photos_line_photo {
             font-size: 1px;
-            width: 15%;
-            height: 80%;
+            width: 10.5rem;
+            aspect-ratio: 3/2;
             margin-left: 50em;
             margin-right: 50em;
             /* border-radius: 15em; */
             /* background-color: #000000; */
             overflow: hidden;
             flex-shrink: 0;
+            border-style:dashed;
+            border-width:0.0025rem;
+
         }
 
         .photos_line_photo img {
-            height: 50%;
+            height: 100%;
             width: 100%;
             transition: 0.3s ease;
         }
@@ -101,6 +105,34 @@ font-style: normal;
   max-height: 90vh;
   object-fit: contain;
 }
+
+.contact a:hover {
+    cursor: context-menu; 
+}
+
+.contact{
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translate(-50%,0%);
+        width: 100%;
+        height: 1vh;
+        cursor: context-menu;
+       }
+
+       .contact_text{
+        font-size: 1rem;
+        /* font-family: 'PP Editorial Old', italic, sans-serif;*/
+        font-style: italic;
+        text-transform: capitalize;
+        cursor: context-menu;
+       }
+
+       a{
+        color:black;
+        text-decoration: none;
+        cursor: context-menu;
+       }
 
         @media screen and (max-aspect-ratio: 1.5/1) {
 
@@ -133,33 +165,33 @@ font-style: normal;
         text-transform: capitalize;
        }
 
-       .contact{
-        position: absolute;
-        bottom: 5%;
-        left: 50%;
-        transform: translate(-50%,0%);
-        width: 100%;
-        height: .5vh;
-       }
+       @media screen and (max-width: 768px) {
 
-       .contact_text{
-        font-size: 1rem;
-        /* font-family: 'PP Editorial Old', italic, sans-serif;*/
-        font-style: italic;
-        text-transform: capitalize;
-       }
+        .photos {
+        position: relative; /* 移除绝对定位 */
+        width: 100%;       /* 占据全部宽度 */
+        overflow: none; /* 允许内容超出 */
+        
+        /* 核心 Grid 布局 */
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* ⭐️ 3列布局，每列宽度相等 */
+        gap: 8rem; /* 图片之间的间距 */
+        
+        /* 确保 transform: scale 被忽略 (通常是 JS 设置的，但 CSS 应该准备好) */
+        transform: none !important; 
+    }
+    
+    /* 1. 重置 Body 和 .photos 容器，允许滚动 */
+  
+}
 
-       a{
-        color:black;
-        text-decoration: none;
-       }
+      
     </style>
 </head>
 
 <body>
     <div class="header">
         <div class="text">
-            <!-- <h1 class="name">Nio Jin</h1> -->
             <p class="text">A set of publications staged as documents in a folder, each exploring how people question the horizon line and the “construction” of the world.</p>
         </div>
     </div>
