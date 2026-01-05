@@ -167,19 +167,21 @@ font-style: normal;
 
     @media screen and (max-width: 768px) {
     
-    /* 1. 重置 Body 和 .photos 容器，允许滚动 */
-
-
+    body{
+        height:100vh;
+        overflow: hidden;
+        display: block;
+    }
     .photos {
-        margin-top: -2vh;
-        margin-bottom: -2vh;
         position: absolute; 
-        width: 90%;     
+        width: 90%; 
+        top:0vh;
+        bottom:8vh;   
         overflow: visible;
         display: grid;
         grid-template-columns: repeat(3, 1fr); 
         gap: 14rem;
-        transform: translateX(-50%); /* 向左平移自身宽度的一半 */
+        transform: translate(-50%, 0);/* 向左平移自身宽度的一半 */
     }
 
     .photos_line {
@@ -204,7 +206,6 @@ font-style: normal;
  
     .header, .contact {
         position: absolute;
-        top: auto;
         left: auto;
         transform: none;
         width: 90%;
@@ -212,11 +213,12 @@ font-style: normal;
     }
 
     .header{
+        left: 50%; 
+        transform: translate(-50%, 0);
         top: 6vh;
     }
     .contact{
         bottom:6vh;
-        margin-top: -2vh;
     }
 }
   
