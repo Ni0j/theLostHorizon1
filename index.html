@@ -420,6 +420,86 @@ if (window.innerWidth > MOBILE_BREAKPOINT) {
     // 确保 photobox 变量仍然存在，但没有初始化其事件监听器
     console.log("Photobox JS disabled on mobile.");
 }
+
+function positionElements() {
+        if (window.innerWidth > 768) {
+            // 桌面端恢复默认样式
+            const header = document.querySelector('.header');
+            const contact = document.querySelector('.contact');
+            header.style.top = '';
+            header.style.left = '';
+            header.style.transform = '';
+            contact.style.bottom = '';
+            contact.style.left = '';
+            contact.style.transform = '';
+            return;
+        }
+
+        const header = document.querySelector('.header');
+        const contact = document.querySelector('.contact');
+        const photos = document.querySelector('.photos');
+
+        const vh = window.innerHeight;
+        
+        // 获取 photos 的实际位置（考虑 scale: 300%）
+        const photosRect = photos.getBoundingClientRect();
+        
+        // 关键：photos 被 scale 放大后超出屏幕，我们需要计算可见部分
+        const visibleTop = Math.max(0, photosRect.top);
+        const visibleBottom = Math.min(vh, photosRect.bottom);
+        
+        const hh = header.offsetHeight;
+        const ch = contact.offsetHeight;
+
+        // 计算上方和下方的实际可用空白区域
+        const topSpace = visibleTop;
+        const bottomSpace = vh - visibleBottom;
+
+        // Header 在上方空白区域居中
+        const headerTop = Math.max(0, (topSpace - hh) / 2);
+        
+        // Contact 在下方空白区域居中
+        const contactBottom = Math.max(0, (bottomSpace - ch) / 2);
+
+        // 应用定位 - 保持水平居中
+        header.style.top = `${headerTop}px`;
+        header.style.bottom = 'auto';
+        header.style.left = '50%';
+        header.style.transform = 'translateX(-50%)';
+        
+        contact.style.bottom = `${contactBottom}px`;
+        contact.style.top = 'auto';
+        contact.style.left = '50%';
+        contact.style.transform = 'translateX(-50%)';
+
+        // Debug 信息
+        console.log('=== Position Elements ===');
+        console.log({
+            windowSize: `${window.innerWidth}x${vh}`,
+            'photosRect.top': photosRect.top.toFixed(2),
+            'photosRect.bottom': photosRect.bottom.toFixed(2),
+            'photosRect.height': photosRect.height.toFixed(2),
+            visibleTop: visibleTop.toFixed(2),
+            visibleBottom: visibleBottom.toFixed(2),
+            topSpace: topSpace.toFixed(2),
+            bottomSpace: bottomSpace.toFixed(2),
+            headerHeight: hh.toFixed(2),
+            contactHeight: ch.toFixed(2),
+            headerTop: headerTop.toFixed(2),
+            contactBottom: contactBottom.toFixed(2)
+        });
+    }
+
+    // 挂载到全局以便 photobox 调用
+    window.positionElements = positionElements;
+
+    // 确保在内容加载完成后执行
+    window.addEventListener('load', () => {
+        setTimeout(positionElements, 200);
+    });
+    window.addEventListener('resize', () => {
+        setTimeout(positionElements, 100);
+    });
 </script>
 
 </html>
